@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>User Home Page</title>
+    <link
+      rel="stylesheet"
+      href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+    />
+    <style>
+      body {
+        margin: auto;
+        padding: auto;
+        font-family: "Jost", sans-serif;
+        background: linear-gradient(to bottom, #0f0c29, #302b63, #24243e);
+      }
+
+
+      header {
+        display: flex;
+        justify-content: space-between; /* Align items horizontally */
+        align-items: center; /* Center items vertically */
+        margin-bottom: 20px;
+        border-bottom: 1px solid #000000;
+        padding: 10px;
+        background: linear-gradient(
+          to bottom,
+          #0f0c29,
+          #302b63,
+          #24243e
+        ); /* Add background gradient */
+      }
+
+      header h4,h6 {
+        margin: 0;
+        padding: 0;
+        text-align: left;
+        color: #ffffff;
+      }
+
+      a {
+        color: #ffffff;
+        text-decoration: none;
+        text-align: center;
+        
+      }
+      h2 {
+        color: #ffffff;
+        margin-left: 8px;
+      }
+      
+      
+
+      .playlist a{
+        margin-top: 5px; 
+        margin-left: 8px;
+        
+      }
+
+      /* Style for the image container */
+      .image-container {
+        position: relative;
+        display: inline-block;
+        margin-bottom: 20px;
+        margin-left: 8px;
+        width: 200px; /* Set a fixed width */
+        height: 200px; /* Set a fixed height */
+        overflow: hidden; /* Hide overflowing content */
+        border-radius: 10px; /* Add rounded corners */
+      }
+
+      /* Style for the song title overlay */
+      .title-overlay {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(
+          0,
+          0,
+          0,
+          0.5
+        ); /* Adjust the background color and opacity */
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        opacity: 0; /* Initially hidden */
+        transition: opacity 0.3s ease; /* Smooth transition effect */
+      }
+
+      /* Style for the song title text */
+      .title-overlay a {
+        color: #ffffff;
+        font-size: 18px;
+        text-align: center;
+        text-decoration: none;
+      }
+
+      /* Hover effect to show the title overlay */
+      .image-container:hover .title-overlay {
+        opacity: 1;
+      }
+
+      /* Style to display images in a row */
+      ul {
+        list-style: none;
+        padding: 0;
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: flex-start;
+      }
+
+      ul li {
+        margin-right: 20px; /* Add spacing between images */
+      }
+
+    
+      .rounded-square {
+        min-width: 200px;
+        min-height: 200px;
+        border-radius: 20px;
+        background-color: #b8c0c5;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+        margin-left: 8px;
+        padding:10px;
+      }
+      .rounded-square a{
+        color: #000000;
+        text-decoration: none;
+        text-align: center;
+      }
+
+      .playlist-list {
+        list-style: none;
+        padding: 0;
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: flex-start;
+        margin-bottom: 20px;
+      }
+
+      .playlist-list li {
+        margin-right: 20px;
+      }
+
+      .genre-list {
+        list-style: none;
+        padding: 0;
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: flex-start;
+      }
+
+      .genre-list li {
+        margin-right: 20px;
+        margin-bottom: 20px;
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <div class="col-md-8">
+        <u><h4>Home Page</h4></u>
+        <h6>Welcome</h6>
+      </div>
+      <form action="/user/{{user_id}}" method="post" style="display: flex">
+        <input
+          type="text"
+          name="search"
+          placeholder="Search"
+          class="mr-2"
+          aria-label="Search"
+        />
+        <button type="submit" class="btn btn-primary">Search</button>
+      </form>
+      {% if artist_id %}
+      <a
+        href="{{ url_for('artist_home', artist_id=artist_id) }}"
+        class="mr-2"
+        aria-label="Creator Account"
+        >Creator Account</a
+      >
+      {% else %}
+      <a
+        href="{{ url_for('artist', user_id=user_id) }}"
+        class="mr-2"
+        aria-label="Creator Account"
+        >Creator Account</a
+      >
+      {% endif %}
+      <a
+        href="{{ url_for('user_home', user_id=user_id) }}"
+        class="mr-2"
+        aria-label="Profile"
+        >Profile</a
+      >
+      <a href="/" aria-label="Logout">Logout</a>
+    </header>
+    {% if songs %}
+      {% if search %}
+        <h2 class="mt-5">Search Result</h2>
+        {% if album %}
+          <ul class="playlist-list">
+            <li>
+              <div class="rounded-square">
+                <a href="{{ url_for('showList',x="album", user_id=user_id,id=album.album_id,Name=album.title) }}" class="btn btn-primary mr-2" >{{ album.title }}</a>
+              </div>
+            </li>
+
+          </ul>
+        {% elif song %}
+            <ul>
+              {% if song.flag %}
+              <li>
+                <div class="image-container">
+                  <img src="{{ url_for('static', filename=song.image_path) }}" alt="Song Image" class="img-fluid" />
+                  <div class="title-overlay">
+                    <a href="{{ url_for('play', song_id=song.song_id) }}">{{ song.title }}</a>
+                  </div>
+                </div>
+              </li>
+              {% endif %}
+            </ul>
+        {% elif genre %}
+          <ul class="playlist-list">
+          <li>
+            <div class="rounded-square">
+              <a href="{{ url_for('showList',x="genre",user_id=user_id ,id=genre.genre_id,Name=genre.name) }}" class="btn btn-primary mr-2">{{ genre.name }}</a>
+            </div>
+          </li>
+          </ul>
+
+        {% endif %}
+      {% endif %}
+  
+    
+        <h2 class="mt-5">All Songs</h2>
+        <ul>
+          {% for song in songs %} {% if song.flag %}
+            <li>
+              <div class="image-container">
+                <img
+                  src="{{ url_for('static', filename=song.image_path) }}"
+                  alt="Song Image"
+                  class="img-fluid"
+                />
+                <div class="title-overlay">
+                  <a href="{{ url_for('play', song_id=song.song_id) }}"
+                    >{{ song.title }}</a
+                  >
+                </div>
+              </div>
+            </li>
+          {% endif %} {% endfor %}
+        </ul>
+      
+    <h2 class="mt-5">Recommanded Tracks</h2>
+    <ul>
+      {% for song in songs %} {% if song.flag and song.rating >=3 %}
+      <li>
+        <div class="image-container">
+          <img
+            src="{{ url_for('static', filename=song.image_path) }}"
+            alt="Song Image"
+            class="img-fluid"
+          />
+          <div class="title-overlay">
+            <a href="{{ url_for('play', song_id=song.song_id) }}"
+              >{{ song.title }}</a
+            >
+          </div>
+        </div>
+      </li>
+      {% endif %} {% endfor %}
+    </ul>
+
+
+      {% if playlists %}
+        <h2 class="mt-5">Your Playlists</h2>
+        <ul class="playlist-list">
+          {% for playlist in playlists %}
+          <div class="rounded-square">
+            <li>
+              <a href="{{ url_for('showList',x="playlist",user_id=user_id ,id=playlist.playlist_id,Name=playlist.name) }}" class="btn btn-info" >{{ playlist.name }}</a>
+            </li>
+            <li>
+              <a href="{{ url_for('delete_playlist',user_id=user_id, name=playlist.name) }}"  class="btn btn-danger">Delete</a>
+            </li>
+          </div>
+          {% endfor %}
+        </ul>
+        {% endif %}
+        <div class="playlist">
+          <a href="{{ url_for('playlist', user_id=user_id) }}" class="btn btn-primary" >Create Playlist</a>
+        </div>
+    <h2 class="mt-5">Albums</h2>
+    <ul class="playlist-list">
+      {% for album in albums %}
+      {% if album.flag %}
+
+      <div class="rounded-square">
+      <li>
+        <div class="playlist">
+          <a href="{{ url_for('showList',x="album", user_id=user_id,id=album.album_id,Name=album.title) }}" class="btn btn-info" >{{ album.title }}</a>
+        </div>
+
+      </li>
+    </div>
+      {% endif %}
+      {% endfor %}
+    </ul>
+
+    <h2 class="mt-5">Genres</h2>
+    <ul class="genre-list">
+      {% for genre in genres %}
+      <li>
+        <div class="rounded-square">
+          <a href="{{ url_for('showList',x="genre",user_id=user_id ,id=genre.genre_id,Name=genre.name) }}" class="btn btn-info">{{ genre.name }}</a>
+
+        </div>
+      </li>
+      {% endfor %}
+    </ul>
+    {% endif %}
+  </body>
+</html>

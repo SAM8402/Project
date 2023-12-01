@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Upload Song</title>
+    <!-- Include Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        /* Header Styles */
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Jost', sans-serif;
+            background: linear-gradient(to bottom, #0f0c29, #302b63, #24243e);
+        }
+        
+        header {
+            display: flex;
+            justify-content: space-between; /* Align items horizontally */
+            align-items: center; /* Center items vertically */
+            margin-bottom: 20px;
+            border-bottom: 1px solid #000000; 
+            padding: 10px;
+            
+        }
+        header h4 {
+            margin: 0;
+            padding: 0;
+            text-align: left;
+            color: #ffffff;
+        }
+        /* Center Content */
+        .center-content {
+            text-align: center;
+        }
+        /* Green Button */
+        .green-button {
+            background-color: #4CAF50;
+            color: #ffffff;
+        }
+        a {
+            color: #ffffff;   
+            text-align: center;
+            text-decoration: none;
+        }
+        label,h1{
+            color: #ffffff;   
+
+        }
+        button {
+            width: 350px;
+            height: 50px;
+            margin: 10px auto;
+            color: #fff;
+            background: #573b8a;
+            font-size: 1em;
+            font-weight: bold;
+            margin-top: 20px;
+            outline: none;
+            border: none;
+            border-radius: 5px;
+            transition: .2s ease-in;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background: #6d44b8;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="col-md-8"> 
+            <h4>Creator Account</h4>
+        </div>
+        
+        <a href="{{ url_for('upload', artist_id=artist_id) }}" class="mr-2" aria-label="Upload Song">Upload Song</a>
+        <a href="{{ url_for('user_home', user_id=artist_id) }}" class="mr-2" aria-label="User Account">User Account</a>
+        <a href="/" aria-label="Logout">Logout</a>
+    </header>
+    <div class="container center-content">
+    <h1><u>Upload a New Song</u></h1></br>
+        <form method="POST" action="{{ url_for('upload', artist_id=artist_id) }}" enctype="multipart/form-data">
+            <!-- Genre Dropdown -->
+            <div class="form-group">
+                <label for="genreName">Genre</label>
+                <input type="text" name="genreName" id="genre" class="form-control" placeholder="Enter genre">
+            </div>
+            
+            <!-- Album Dropdown -->
+            <div class="form-group">
+                <label for="AlbumTitle">Album Title</label>
+                <input type="text" name="albumTitle" id="album" class="form-control" placeholder="Enter album title">
+            </div>
+            
+            <!-- Title -->
+            <div class="form-group">
+                <label for="title">Song Title</label>
+                <input type="text" id="title" name="title" class="form-control" placeholder="Enter song title" required>
+            </div>
+            <!-- Singer -->
+            <div class="form-group">
+                <label for="singer">Singer</label>
+                <input type="text" id="singer" name="singer" class="form-control" placeholder="Enter singer name" required>
+            </div>
+            <!-- Release Date -->
+            <div class="form-group">
+                <label for="date">Release Date</label>
+                <input type="date" id="date" name="date" class="form-control" required>
+            </div>
+            <!-- Duration -->
+            <div class="form-group">
+                <label for="time">Duration</label>
+                <input type="number" placeholder="in minutes" id="time" name="time" max="1000" step="0.01" class="form-control" required>
+            </div>
+    
+            <!-- Lyrics -->
+            <div class="form-group">
+                <label for="lyrics">Lyrics</label>
+                <textarea id="lyrics" name="lyrics" rows="3" class="form-control" placeholder="Enter lyrics" required></textarea>
+            </div>
+            <!-- MP3 File -->
+            <div class="form-group">
+                <label for="audio_file">Select Audio File (MP3)</label>
+                <input type="file" id="audio_file" name="audio_file" class="form-control-file" accept=".mp3" required>
+            </div>
+            <!-- Thumbnail -->
+            <div class="form-group">
+                <label for="image_file">Thumbnail</label>
+                <input type="file" id="image_file" name="image_file" class="form-control-file" accept=".jpg, .jpeg, .png" required>
+            </div>
+            <!-- Upload Button -->
+            <button type="submit" class="btn btn-success green-button">Upload</button>
+        </form>
+    </div>
+    
+    
+    
+</body>
+</html>

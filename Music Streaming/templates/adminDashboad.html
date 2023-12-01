@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Admin Dashboard</title>
+    <link
+      rel="stylesheet"
+      href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+    />
+    <style>
+      /* Set the background gradient for the entire page */
+      body {
+        margin: 0;
+        padding: 0;
+        font-family: "Jost", sans-serif;
+        background: linear-gradient(to bottom, #0f0c29, #302b63, #24243e);
+      }
+
+
+      /* Center the container */
+      .container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: 100vh;
+        height: 80vh; /* 80% of the viewport height */
+      }
+
+      /* Create a rounded square container */
+      .rounded-square {
+        width: 2000px; /* Adjust the size as needed */
+        height: 800px; /* Same as width for a square */
+        border-radius: 20px; /* Adjust the border-radius for rounding */
+        background-color: #b8c0c5; /* Background color for the square */
+        display: flex;
+        flex-direction: column; /* Stack elements vertically */
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+        flex-direction: column;
+        padding: auto;
+        margin: auto;
+      }
+      .roundedSquare {
+        width: 2000px; /* Adjust the size as needed */
+        height: auto; /* Same as width for a square */
+        border-radius: 20px; /* Adjust the border-radius for rounding */
+        background-color: #b8c0c5; /* Background color for the square */
+        display: flex;
+        flex-direction: column; /* Stack elements vertically */
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+        padding: auto;
+        margin: auto;
+      }
+      .top-half,
+      .bottom-half {
+        flex: 1; /* Split the container into equal parts */
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+      .image-container {
+        position: relative;
+        display: inline-block;
+        margin-bottom: 20px;
+        width: 1000px; /* Set a fixed width */
+        height: 425px; /* Set a fixed height */
+        overflow: hidden; /* Hide overflowing content */
+        border-radius: 10px; /* Add rounded corners */
+        margin-top: 20px;
+      }
+
+      header {
+        display: flex;
+        justify-content: space-between; /* Align items horizontally */
+        align-items: center; /* Center items vertically */
+        margin-bottom: 20px;
+        border-bottom: 1px solid #000000;
+        padding: 10px;
+        background: linear-gradient(to bottom, #0f0c29, #302b63, #24243e);
+      }
+
+      header h4 {
+        margin: 0;
+        padding: 0;
+        text-align: left;
+        color: #ffffff;
+      }
+
+      /* Center Content */
+      .center-content {
+        text-align: center;
+      }
+
+      a {
+        color: #ffffff;
+        text-align: center;
+        text-decoration: none;
+      }
+      ul {
+        list-style: none;
+        padding: 0;
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: flex-start;
+        margin-bottom: 20px;
+        width: 100%; /* Adjust the width as needed */
+      }
+
+      ul li {
+        margin-right: 20px;
+        width: auto; /* Make sure individual list items have automatic width */
+      }
+
+      .playlist {
+        text-align: right;
+        position: absolute;
+        right: 10px;
+      }
+      .roundedsquare {
+        width: 350px;
+        height: 350px;
+        border-radius: 20px;
+        background-color: #b8c0c5;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+        padding: auto;
+        margin: auto;
+      }
+      .roundsquare {
+        width: auto;
+        height: auto;
+        border-radius: 20px;
+        background-color: #ffffff;
+        flex-direction: column;
+        padding: auto;
+        margin: auto;
+        display: flex;
+      }
+
+      ul.playlist-list {
+        list-style: none;
+        padding: 0;
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: flex-start;
+        margin-bottom: 20px;
+      }
+
+      ul.playlist-list li {
+        width: 350px; /* Set the width of each album element */
+        margin-right: 20px;
+        margin-bottom: 20px; /* Add spacing between albums */
+        padding-left: 250px;
+      }
+      h3, h2 {
+        text-align: center;
+        margin: 0;
+        display: block;
+      }
+      table {
+        width: 100%;
+        border-collapse: collapse
+      }
+
+      td {
+          border: 1px solid black;
+          padding: 8px;
+          text-align: center;
+      }
+
+      tr:nth-child(even) {
+          background-color: #f2f2f2;
+      }
+
+      .actions a {
+        color:rgb(0, 0, 0);
+        text-decoration: none;
+      }
+      .actions button{
+        color: rgb(0, 0, 0);
+        text-decoration: none;
+      }
+
+      .actions a:hover {
+        text-decoration: underline;
+      }
+      .actions button:hover {
+        text-decoration: underline;
+      }
+
+      
+      .actions button:visited {
+      color: purple;
+      }
+
+      .dashboard {
+      width: 80%;
+      margin: 0 auto;
+      text-align: center;
+      }
+
+      .unit {
+      display: flex;
+      justify-content: space-between;
+      }
+
+      .unit .left-half {
+      width: 35%;
+      }
+
+      .unit .right-half {
+      width: 65%; /* Allow it to grow flexibly */
+      }
+
+    </style>
+  </head>
+  <body>
+    <header>
+      <div class="col-md-8 text-right">
+        <h4>Administrator Dashboard</h4>
+      </div>
+
+      <a href="{{url_for('adminShowList', name=name) }}" class="btn btn-primary mr-2" aria-label=" All Tracks and Albums">All Tracks and Album</a>
+
+      <a href="/logout" class="btn btn-primary mr-2" aria-label="Logout">Logout</a>
+    </header>
+    <div class="roundsquare"></br>
+      <b><h1 style="text-align: left;">{{name}}</h1></b>
+      <u><h3 style="text-align: left;">Dashboard</h3></u>
+      <ul class="playlist-list">
+        <li>
+            <div class="roundedsquare">
+              <u><h3>Total Songs Uploaded : </h3></u>
+            <h1>{{total_songs}}</h2>
+        </div>
+        </li>
+        <li>
+        <div class="roundedsquare">
+                <u><h3>Average Rating : </h3></u>
+                <h1>{{avg_rating}}</h2>
+            </div>
+        </li> 
+        <li>
+            <div class="roundedsquare">
+              <u><h3>Total Album : </h3></u>
+            <h1>{{total_albums}}</h2>
+          </div>
+        </li>
+      </ul>
+    </div>
+    <div class="unit">
+      <div class="left-half">
+        <div class="container">
+          <div class="rounded-square">
+            <div class="top-half">
+              <u><h3>Normal User: </h1></u>
+              <h1> {{total_user}}</h2>
+            </div>
+            <div><p>___________________________________________________________</p></div>
+            <div class="bottom-half">
+              <u><h3>Artist: </h1></u>
+              <h1> {{total_artist}}</h2>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="right-half">
+        <div class="container">
+          <div class="roundedSquare">
+            <div class="top-half">
+              <div class="image-container">
+                <img src="{{ graph1 }}"  alt="Song Ratings Graph" width="900" height="380">
+                <u><h2>Graph between Number of Users, Artists and Albums</h2><br></u>
+              </div>
+            </div>
+            
+            <div class="bottom-half">
+              <div class="image-container">
+                <img src="{{ graph2 }}"  alt="Song Ratings Graph" width="900" height="380">
+                <u><h2>Graph between Songs and their Rating</h2></u>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="container">
+        <div class="rounded-square">
+          <u><h2 style="text-align: left;">Artists</h2></u></br>
+            <div class="dashboard">
+            <table >
+                <tbody>
+                  <thead>
+                    <th>Artist Name</th>
+                    <th>Status</th> 
+                    <th>No. of Flags on artist's song</th>
+                    <th>Actions</th> 
+                  </thead>
+                  {% for artist in artists %} 
+                    <tr>
+                        <td>{{ artist.name}}</td>
+                        {% if  artist.flag %}
+                        <td> Whitelisted</td>
+                        {% else %}
+                        <td> Blacklisted </td>
+                        {% endif %}
+                        <td>{{ flagged_songs_count[artist.name] }}</td>
+                        <td class="actions">
+                        <a href="{{url_for('flag', x="artist",id=artist.artist_id) }}" class="btn btn-outline-danger">Blacklist / Whitelist </a>                            
+                        </td>
+                    </tr>
+                  {% endfor %} 
+                </tbody>
+            </table>
+            </div>
+        </div>
+    </div>
+   
+   </body>
+</html>
+    

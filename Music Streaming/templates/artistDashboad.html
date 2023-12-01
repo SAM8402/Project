@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Creator Dashboad</title>
+    <link
+      rel="stylesheet"
+      href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+    />
+    <style>
+      /* Set the background gradient for the entire page */
+      body {
+        margin: 0;
+        padding: 0;
+        font-family: "Jost", sans-serif;
+        background: linear-gradient(to bottom, #0f0c29, #302b63, #24243e);
+      }
+
+        /* Center the container */
+        .container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            height: 80vh; /* 80% of the viewport height */
+        }
+
+
+      /* Create a rounded square container */
+      .rounded-square {
+        width: 2000px; /* Adjust the size as needed */
+        height: auto; /* Same as width for a square */
+        border-radius: 20px; /* Adjust the border-radius for rounding */
+        background-color: #b8c0c5; /* Background color for the square */
+        display: flex;
+        flex-direction: column; /* Stack elements vertically */
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+        padding: auto;
+        margin: auto;
+      }
+
+
+      header {
+        display: flex;
+        justify-content: space-between; /* Align items horizontally */
+        align-items: center; /* Center items vertically */
+        margin-bottom: 20px;
+        border-bottom: 1px solid #000000;
+        padding: 10px;
+        background: linear-gradient(to bottom, #0f0c29, #302b63, #24243e);
+      }
+
+      header h4 {
+        margin: 0;
+        padding: 0;
+        text-align: left;
+        color: #ffffff;
+      }
+
+      /* Center Content */
+      .center-content {
+        text-align: center;
+      }
+
+    
+
+      a {
+        color: #ffffff;
+        text-align: center;
+        text-decoration: none;
+      }
+      ul {
+        list-style: none;
+        padding: 0;
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: flex-start;
+        margin-bottom: 20px;
+        width: 100%; /* Adjust the width as needed */
+      }
+
+      ul li {
+        margin-right: 20px;
+        width: auto; /* Make sure individual list items have automatic width */
+      }
+
+      .playlist {
+        text-align: right;
+        position: absolute;
+        right: 10px;
+      }
+      .roundedsquare {
+        width: 350px;
+        height: 350px;
+        border-radius: 20px;
+        background-color: #b8c0c5;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+      }
+      .roundsquare {
+        width: auto;
+        height: 450px;
+        border-radius: 20px;
+        background-color: #ffffff;
+        flex-direction: column;
+        padding: auto;
+        margin: auto;
+      }
+
+      ul.playlist-list {
+        list-style: none;
+        padding: 0;
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: flex-start;
+        margin-bottom: 20px;
+      }
+
+      ul.playlist-list li {
+        width: 350px; /* Set the width of each album element */
+        margin-right: 20px;
+        margin-bottom: 20px; /* Add spacing between albums */
+        padding-left: 250px;
+      }
+      h3, h2 {
+        text-align: center;
+        margin: 0;
+        display: block;
+      }
+      table {
+        width: 100%;
+        border-collapse: collapse
+      }
+
+      td {
+          border: 1px solid black;
+          padding: 8px;
+          text-align: center;
+      }
+
+      tr:nth-child(even) {
+          background-color: #f2f2f2;
+      }
+
+      .actions a {
+          color: green;
+          text-decoration: none;
+      }
+
+      .actions a:hover {
+          text-decoration: underline;
+      }
+
+      .actions a:visited {
+          color: purple;
+      } 
+      .dashboard {
+          width: 80%;
+          margin: 0 auto;
+          text-align: center;
+      }
+       
+    </style>
+  </head>
+  <body>
+    <header>
+      <div class="col-md-8 text-right">
+        <h4>Creator Dashboad</h4>
+      </div>
+
+      <a
+        href="{{ url_for('upload', artist_id=artist.artist_id) }}"
+        class="mr-2"
+        aria-label="Creator Account"
+        >Upload Song</a
+      >
+      <a
+        href="{{ url_for('user_home', user_id=artist.user_id) }}"
+        class="mr-2"
+        aria-label="Profile"
+        >User Account</a
+      >
+      <a href="/" aria-label="Logout">Logout</a>
+    </header>
+    <div class="roundsquare"></br>
+        <h2 style="text-align: left;">Dashboad</h2>
+      <ul class="playlist-list">
+        <li>
+            <div class="roundedsquare">
+              <h3>Total Songs Uploaded : </h3>
+            <h1>{{total_songs}}</h1>
+        </div>
+    </li>
+    <li>
+        <div class="roundedsquare">
+                <h3>Average Rating : </h3>
+                <h1>{{avg_rating}}</h1>
+            </div>
+        </li> 
+        <li>
+            <div class="roundedsquare">
+              <h3>Total Album : </h3>
+            <h1>{{total_albums}}</h1>
+          </div>
+        </li>
+      </ul>
+    </div>
+    <div class="container">
+        <div class="rounded-square">
+            <u><h2 style="text-align: left;">Your Uploads</h2></u></br>
+            <div class="dashboard">
+            <table >
+                <tbody>
+                  <thead>
+                    <th>Song Name</th>
+                    <th>Artist Name</th>
+                    <th>Song Actions</th> 
+                  </thead>
+                  {% for song in songs %} 
+                    <tr>
+                        <td>{{ song.title }}</td>
+                        <td>{{ song.artistname }}</td>
+                        <td class="actions">
+                          <a href="{{ url_for('play', song_id=song.song_id) }}">View Lyrics | </a>
+                          <a href="{{ url_for('edit_song', song_id=song.song_id) }}">Edit | </a>
+                          <a href="{{ url_for('delete_song', song_id=song.song_id) }}">Delete</a>
+                        </td>
+                    </tr>
+                  {% endfor %}
+                </tbody>
+            </table>
+            </div>
+        </br></br>
+        
+            <u><h2 style="text-align: left;">Your Album</h2></u></br>
+            <div class="dashboard">
+            <table >
+                <tbody>
+                  <thead>
+                    <th>Album Name</th>
+                    <th>Release Date</th>
+                    <th>Album Actions</th>
+                  </thead>
+                  {% for album in albums %}
+                    <tr>
+                        <td>{{ album.title }}</td>
+                        <td>{{ album.release }}</td>
+                        <td class="actions">
+                          <a href="{{ url_for('edit_album', album_id=album.album_id) }}">Edit | </a>
+                          <a href="{{ url_for('delete_album', album_id=album.album_id) }}">Delete</a>
+                      </td>
+                    </tr>
+                  {% endfor %}
+                </tbody>
+            </table>
+            
+        </br></br>
+        <img src="{{ graph }}"  alt="Song Ratings Graph" width="900" height="380">
+        <u><h2>Graph between Songs and their Rating</h2></u>
+        </br></br>
+            <div style="text-align: center;">
+              <a href="{{ url_for('upload', artist_id=artist_id) }}" class="btn btn-primary mr-2" aria-label="Upload Song">Upload Song</a>
+            </div>
+
+          </div>
+          
+          
+    </div>
+  </body>
+</html>

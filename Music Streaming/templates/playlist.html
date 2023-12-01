@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Playlist</title>
+    <link
+      rel="stylesheet"
+      href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+    />
+    <style>
+      body {
+        margin: 0;
+        padding: 0;
+        font-family: "Jost", sans-serif;
+        background: linear-gradient(to bottom, #0f0c29, #302b63, #24243e);
+      }
+
+      header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 20px;
+        border-bottom: 1px solid #000000;
+        padding: 10px;
+        background: linear-gradient(to bottom, #0f0c29, #302b63, #24243e);
+      }
+
+      header h4 {
+        margin: 0;
+        padding: 0;
+        text-align: left;
+        color: #ffffff;
+      }
+
+      a {
+        color: #ffffff;
+        text-decoration: none;
+        text-align: center;
+      }
+
+      h2 {
+        color: #000000;
+      }
+
+      label {
+        color: #000000;
+        display: flex; /* Align label content horizontally */
+        justify-content: space-between; /* Space between label content and checkbox */
+        align-items: center; /* Center content vertically */
+      }
+
+      input[type="checkbox"] {
+        margin-left: 30px; /* Add margin between label content and checkbox */
+      }
+
+      .submit button {
+        width: 350px;
+        height: 50px;
+        margin: 10px auto;
+        color: #fff;
+        background: #573b8a;
+        font-size: 1em;
+        font-weight: bold;
+        margin-top: 20px;
+        outline: none;
+        border: none;
+        border-radius: 5px;
+        transition: 0.2s ease-in;
+        cursor: pointer;
+      }
+
+      .submit button:hover {
+        background: #6d44b8;
+      }
+      /* Center the container */
+        .container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            height: 80vh; /* 80% of the viewport height */
+        }
+
+        /* Create a rounded square container */
+        .rounded-square {
+            width: 800px; /* Adjust the size as needed */
+            height: 800px; /* Same as width for a square */
+            border-radius: 20px; /* Adjust the border-radius for rounding */
+            background-color: #b8c0c5; /* Background color for the square */
+            display: flex;
+            flex-direction: column; /* Stack elements vertically */
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+        }
+    </style>
+  </head>
+  <body>
+    <header>
+      <div class="col-md-8">
+        <h4>Normal User's Home Page</h4>
+      </div>
+      <form action="/user/{{user_id}}" method="post" style="display: flex">
+        <input
+          type="text"
+          name="search"
+          placeholder="Search"
+          class="mr-2"
+          aria-label="Search"
+        />
+        <button type="submit">Search</button>
+      </form>
+      {% if artist_id %}
+      <a
+        href="{{ url_for('artist_home', artist_id=artist_id) }}"
+        class="mr-2"
+        aria-label="Creator Account"
+        >Creator Account</a
+      >
+      {% else %}
+      <a
+        href="{{ url_for('artist', user_id=user_id) }}"
+        class="mr-2"
+        aria-label="Creator Account"
+        >Creator Account</a
+      >
+      {% endif %}
+      <a
+        href="{{ url_for('user_home', user_id=user_id) }}"
+        class="mr-2"
+        aria-label="Profile"
+        >Profile</a
+      >
+      <a href="/" aria-label="Logout">Logout</a>
+    </header>
+    <div class="container center-content">
+      <div class="rounded-square">
+        
+      <u><h2 class="mt-5">Create Your Playlist</h2></u>
+        <ul>
+          <form
+            action="{{ url_for('playlist', user_id=user_id) }}"
+            method="post"
+          >
+        </br ></br >
+            <select name="status" id="status">
+              <option value="Private">Private</option>
+              <option value="Public">Public</option>
+            </select>
+        </br ></br>
+        <div class="form-group">
+          <label for="AlbumTitle">Playlist Title</label>
+          <input type="text" name="playlistTitle" id="album" class="form-control" placeholder="Enter new playlist title">
+      </div>
+    </br ></br>
+            {% for song in songs %}
+            <li>
+              <div class="image-container">
+                <div class="title-overlay">
+                  <label
+                    >{{ song.title }}<input
+                      type="checkbox"
+                      name="selected_songs"
+                      value="{{song.song_id}}"
+                  /></label>
+                </div>
+              </div>
+            </li>
+            {% endfor %}
+            <div class="submit">
+              <button type="submit">Add</button>
+            </div>
+          </form>
+        </ul>
+      </div>
+    </div>
+  </body>
+</html>

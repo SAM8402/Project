@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Creator Account</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        /* Set the background gradient for the entire page */
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Jost', sans-serif;
+            background: linear-gradient(to bottom, #0f0c29, #302b63, #24243e);
+        }
+
+        /* Center the container */
+        .container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            height: 80vh; /* 80% of the viewport height */
+        }
+
+        /* Create a rounded square container */
+        .rounded-square {
+            width: 800px; /* Adjust the size as needed */
+            height: 800px; /* Same as width for a square */
+            border-radius: 20px; /* Adjust the border-radius for rounding */
+            background-color: #b8c0c5; /* Background color for the square */
+            display: flex;
+            flex-direction: column; /* Stack elements vertically */
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+        }
+
+        /* Style the circular button */
+        .circular-button {
+            width: 350px; /* Adjust the size as needed */
+            height: 350px; /* Same as width for a circle */
+            background-color: #573b8a; /* Background color for the button */
+            border-radius: 50%; /* Make it circular */
+            display: flex;
+            flex-direction: column; /* Stack elements vertically */
+            justify-content: center;
+            align-items: center;
+            color: #fff; /* Text color */
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        header {
+            display: flex;
+            justify-content: space-between; /* Align items horizontally */
+            align-items: center; /* Center items vertically */
+            margin-bottom: 20px;
+            border-bottom: 1px solid #000000;
+            padding: 10px;
+            background: linear-gradient(to bottom, #0f0c29, #302b63, #24243e);
+
+        }
+
+        header h4 {
+            margin: 0;
+            padding: 0;
+            text-align: left;
+            color: #ffffff;
+        }
+
+        /* Center Content */
+        .center-content {
+            text-align: center;
+        }
+
+        /* Green Button */
+        .green-button {
+            background-color: #4CAF50;
+            color: #ffffff;
+        }
+
+        a {
+            color: #ffffff;   
+            text-align: center;
+            text-decoration: none;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="col-md-8"> 
+            <h4>Creator Account</h4>
+        </div>
+        
+        <a href="{{ url_for('upload', artist_id=artist_id) }}" class="mr-2" aria-label="Creator Account">Upload Song</a>
+        <a href="{{ url_for('artist_dashboad', artist_id=artist_id) }}" class="mr-2" aria-label="Profile">Creator Dashboad</a>
+        <a href="/" aria-label="Logout">Logout</a>
+    </header>
+    <div class="container">
+        <div class="rounded-square">
+            <h1 >Kickstart Your Creators Journey</h1>
+            <h1 >Start with Uploading Songs</h1>
+            <a href="{{ url_for('upload', artist_id=artist_id) }}" class="btn btn-success circular-button">Start Uploading</a>
+        </div>
+    </div>
+</body>
+</html>

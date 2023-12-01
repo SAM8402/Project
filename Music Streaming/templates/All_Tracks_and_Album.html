@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>All Tracks and Album</title>
+    <link
+      rel="stylesheet"
+      href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+    />
+    <style>
+      /* Set the background gradient for the entire page */
+      body {
+        margin: 0;
+        padding: 0;
+        font-family: "Jost", sans-serif;
+        background: linear-gradient(to bottom, #0f0c29, #302b63, #24243e);
+      }
+
+        /* Center the container */
+        .container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 40vh;
+            height: auto; /* 80% of the viewport height */
+            padding: auto;
+            margin:auto;
+        }
+
+
+      /* Create a rounded square container */
+      .rounded-square {
+        width: 2000px; /* Adjust the size as needed */
+        height: auto; /* Same as width for a square */
+        border-radius: 20px; /* Adjust the border-radius for rounding */
+        background-color: #b8c0c5; /* Background color for the square */
+        display: flex;
+        flex-direction: column; /* Stack elements vertically */
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+        padding: auto;
+        margin:auto;
+      }
+      .dashboard {
+        width: 80%;
+        margin: 0 auto;
+        text-align: center;
+        padding: auto;
+        
+      }
+
+
+      header {
+        display: flex;
+        justify-content: space-between; /* Align items horizontally */
+        align-items: center; /* Center items vertically */
+        margin-bottom: 20px;
+        border-bottom: 1px solid #000000;
+        padding: 10px;
+        background: linear-gradient(to bottom, #0f0c29, #302b63, #24243e);
+      }
+
+      header h4 {
+        margin: 0;
+        padding: 0;
+        text-align: left;
+        color: #ffffff;
+      }
+
+      /* Center Content */
+      .center-content {
+        text-align: center;
+      }
+      .dashboard {
+        width: 80%;
+        margin: 0 auto;
+        text-align: center;
+      }
+
+      a {
+        color: #ffffff;
+        text-align: center;
+        text-decoration: none;
+      }
+
+      h3, h2 {
+        text-align: center;
+        margin: 0;
+        display: block;
+      }
+      table {
+        width: 100%;
+        border-collapse: collapse
+      }
+
+      td {
+          border: 1px solid black;
+          padding: 8px;
+          text-align: center;
+      }
+
+      tr:nth-child(even) {
+          background-color: #f2f2f2;
+      }
+
+      .actions a {
+          color: rgb(0, 0, 0);
+          text-decoration: none;
+      }
+      .actions button{
+          color: rgb(0, 0, 0);
+          text-decoration: none;
+      }
+
+      .actions a:hover {
+          text-decoration: underline;
+      }
+      .actions button:hover {
+          text-decoration: underline;
+      }
+
+      .actions a:visited {
+          color: purple;
+      } 
+      .actions button:visited {
+          color: purple;
+      } 
+      .dashboard {
+          width: 80%;
+          margin: 0 auto;
+          text-align: center;
+      }
+       
+  </style>
+  </head>
+  <body>
+    <header>
+        <div class="col-md-8">
+          <h4>Administrator</h4>
+        </div>
+        <a
+          href="{{ url_for('admin_home', name=name) }}"
+          class="btn btn-primary mr-2"
+          aria-label="Profile"
+          >Dashboard</a
+        >
+        <a href="/" class="btn btn-primary mr-2" aria-label="Logout">Logout</a>
+      </header>
+    
+    <div class="container">
+        <div class="rounded-square">
+        <u><h2 style="text-align: left;">All Tracks</h2></u></br>
+            <div class="dashboard">
+            <table >
+                <tbody>
+                  <thead>
+                    <th>Song Name</th>
+                    <th>Artist Name</th>
+                    <th>Status</th> 
+                    <th>Song Actions</th> 
+                  </thead>
+                  {% for song in songs %} 
+                    <tr>
+                        <td>{{ song.title }}</td>
+                        <td>{{ song.artistname }}</td>
+                        {% if song.flag %}
+                          <td>Active</td>
+                        {% else %}
+                          <td>InActive</td>
+                        {% endif %}
+                        <td class="actions">
+                          <a href="{{ url_for('play', song_id=song.song_id) }}" class="btn btn-success">View Lyrics </a>
+                          <a href="{{ url_for('flag',x="song" ,id=song.song_id) }}" class="btn btn-danger">Flag </a>
+                        </td>
+                    </tr>
+                  {% endfor %}
+                </tbody>
+            </table>
+            </div>
+        </div>
+    </div>
+    <div class="container">
+        <div class="rounded-square">
+        <u><h2 style="text-align: left;">Album</h2></u></br>
+            <div class="dashboard">
+                <table >
+                    <tbody>
+                      <thead>
+                        <th>Album Name</th>
+                        <th>Status</th> 
+                        <th>Song Actions</th>
+                      </thead>
+                      {% for album in albums %} 
+                        <tr>
+                            <td>{{ album.title }}</td>
+                            {% if album.flag %}
+                            <td>Active</td>
+                            {% else %}
+                            <td>InActive</td>
+                            {% endif %}
+                            <td class="actions">
+                              <a href="{{ url_for('showList',x="album",user_id=1, id=album.album_id,Name="album.title") }}" class="btn btn-success">View Album </a>
+                              <a href="{{ url_for('flag',x="album" ,id=album.album_id) }}" class="btn btn-danger">Flag </a>
+                            </td>
+                        </tr>
+                      {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>     
+    </div>
+  </body>
+</html>
